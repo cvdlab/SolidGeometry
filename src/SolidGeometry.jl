@@ -1,4 +1,4 @@
-module PointLib
+module SolidGeometry
 
 greet() = print("Hello World!") # Created by generate command
 
