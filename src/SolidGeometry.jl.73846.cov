@@ -1,0 +1,41 @@
+        - module SolidGeometry
+        - 
+        - greet() = print("Hello World!") # Created by generate command
+        - 
+        - using LinearAlgebra
+        - 
+        - export Point2D, iscollinear, ϵ
+        - 
+        - struct Point2D
+        9     x::Float64
+        -     y::Float64
+        - end
+        - 
+        - function ϵ end
+        - 
+        - let _epsilon = 1e-5
+        5     global ϵ() = _epsilon
+        - end
+        - 
+        9 function length(pA::Point2D, pB::Point2D)
+        9     x1, y1, x2, y2 = pA.x, pA.y, pB.x, pB.y
+        9     dx, dy = x1 - x2, y1 - y2
+        9     return sqrt(dx*dx+dy*dy)
+        - end
+        - 
+        3 ∆(pA::Point2D, pB::Point2D, pC::Point2D) =
+        -     0.5*det([pA.x pA.y 1; pB.x pB.y 1; pC.x pC.y 1])
+        - 
+        3 L(pA::Point2D, pB::Point2D, pC::Point2D) =
+        -     max(length(pA, pB), length(pB, pC), length(pC, pA))
+        - 
+        3 function iscollinear(pA::Point2D, pB::Point2D, pC::Point2D)
+        3     l = L(pA, pB, pC)
+        -     # The longest length is too small if all the points
+        -     # are coincident
+        -     # This a special case to avoid divide by zero.
+        3     l <= ϵ() && return true
+        3     return 2∆(pA, pB, pC)/l <= ϵ()
+        - end
+        - 
+        - end # module
