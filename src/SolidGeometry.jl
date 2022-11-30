@@ -1,4 +1,4 @@
-module PointLib 
+module PointLib
 
 greet() = print("Hello World!") # Created by generate command
 
