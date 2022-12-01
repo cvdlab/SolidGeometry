@@ -1,0 +1,3 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+SolidGeometry = "3ec7990d-0abe-4e00-88cc-a07ac4117947"
