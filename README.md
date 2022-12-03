@@ -7,5 +7,3 @@
 
 Official repo for CSG (Constructive Solid Geometry) with LAR (LinearAlgebraicRepresentation)
 
-
-DOI: 10.1016/j.cad.2022.103436
