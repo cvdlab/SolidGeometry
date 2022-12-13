@@ -10,6 +10,8 @@ using Distributed
 using LinearAlgebraicRepresentation
 Lar = LinearAlgebraicRepresentation
 
+export Lar, Points, Cells, Chain, ChainOp, ChainComplex, LAR, LARmodel, GComplex
+
 """
     Points = Matrix{Number}
 
@@ -56,25 +58,16 @@ const ChainComplex = Vector{ChainOp}
 
 
 """
-    LARmodel = Tuple{Points,Array{Cells,1}}
+    LAR = Pair{Points,Vector{Cells}}
 
 Alias declation of LAR-specific data structure.
 `LARmodel` is a pair (*Geometry*, *Topology*), where *Geometry* is stored as `Points`, and *Topology* is stored as `Array` of `Cells`. The number of `Cells` values may vary from `1` to `N+1`.
 """
-const LARmodel = Tuple{Points,Array{Cells,1}}
+const LAR = Pair{Points,Vector{Cells}}
 
 
 """
-    LAR = Union{ Tuple{Points, Cells},Tuple{Points, Cells, Cells} }
-
-Alias declation of LAR-specific data structure. 
-`LAR` is a pair (*Geometry*, *Topology*), where *Geometry* is stored as `Points`, and *Topology* is stored as `Cells`. 
-"""
-const LAR = Union{ Tuple{Points, Cells},Tuple{Points, Cells, Cells} }
-
-
-"""
-    GComplex = Tuple{Points, ChainComplex}
+    GComplex = Pair{Points, ChainComplex}
 
 Alias declation of evaluated LAR data structure. 
 `GComplex` is a pair (*Geometry*, *Topology*), where *Geometry* is stored as `Points`, and *Topology* is stored as `ChainComplex`. 
