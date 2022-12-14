@@ -75,5 +75,7 @@ Alias declation of evaluated LAR data structure.
 const GComplex = Tuple{Points, ChainComplex}
 
 
+include("./largrid.jl")
+
 
 end # SolidGeometry
