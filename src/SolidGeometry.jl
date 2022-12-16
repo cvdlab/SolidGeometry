@@ -76,6 +76,7 @@ const GComplex = Tuple{Points, ChainComplex}
 
 
 include("./largrid.jl")
+include("./mapper.jl")
 
 
 end # SolidGeometry

@@ -3,7 +3,7 @@ using DataStructures
 
 
 """
-	INSR(f::Function)(seq::Array{Any,1})::Any
+	INSR(f::Function)(seq::Vector{Any)::Any
 
 FL primitive combinator to transform a binary function to an n-ary one.
 ```
@@ -11,28 +11,27 @@ julia> mod1D = Lar.grid(repeat([.1,-.1],outer=5)...)
 ([0.0 0.1 … 0.9 1.0], Array{Int64,1}[[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
 
 
-#julia> GL.VIEW([ GL.GLFrame2, GL.GLGrid(mod1D..., GL.COLORS[1],1) ])
+#julia> GL.VIEW([ GL.GLFrame2, GL.GLGrid(mod1D..., GL.COLORS[1],1) ]);
 
 julia> mod3D = Lar.INSR(Lar.larModelProduct)([mod1D,mod1D,mod1D])
 ([0.0 0.0 … 1.0 1.0; 0.0 0.0 … 1.0 1.0; 0.0 0.1 … 0.9 1.0],
 Array{Int64,1}[[1, 2, 12, 13, 122, 123, 133, 134], [3, 4, 14, 15, 124, 125, 135, 136],
 … [1063, 1064, 1074, 1075, 1184, 1185, 1195, 1196], [1065, 1066, 1076, 1077, 1186, 1187, 1197, 1198]])
 
-#julia> GL.VIEW([ GL.GLFrame2, GL.GLPol(mod3D..., GL.COLORS[1],1) ])
+#julia> GL.VIEW([ GL.GLFrame2, GL.GLPol(mod3D..., GL.COLORS[1],1) ]);
 ```
 """
 function INSR(f)
 	function INSR0(seq)
-		len = length(seq)
-		res = seq[end]
-		for i in range(len-2,step=-1,stop=0)
-			res = f([seq[i+1], res])
+		n = length(seq)
+		result = seq[end]
+		for i in n-2:-1:0
+			result = f([seq[i+1], res])
 		end
-		return res
+		return result
 	end
 	return INSR0
 end
-
 
 
 """
@@ -43,7 +42,7 @@ Generate a 1D LAR model.
 *Geometry* is stored as 1D `Points`, and *Topology* is stored as 1D `Cells`.
 `q()` and `q()()` are used as alias function name.
 ```julia
-julia> model1D = Lar.grid(1,-1,1,-1,1,-1,1,-1,1,-1)
+julia> model1D = Lar.q(1,-1,1,-1,1,-1,1,-1,1,-1)
 ([0.0 1.0 … 9.0 10.0], Array{Int64,1}[[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
 
 julia> model1D[1]
@@ -62,19 +61,21 @@ julia> model1D[2]
  ([0.0 0.1 … 0.9 1.0], Array{Int64,1}[[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
 ```
 """
-function grid(sequence...)
-	sequence = collect(sequence)
-	cursor,points,hulls= (0,[[0.]],[])
+function grid(sequence::T...) where T
+	cursor = zero(T)
+    points = [zero(T)]
+    hulls = Vector{Int}[]
+
 	for value in sequence
-		points = append!(points, [[cursor + abs(value)]])
-		if value>=0
-			append!(hulls,[[length(points)-1,length(points)]])
+		push!(points, cursor + abs(value))
+		if value >= 0
+            n = length(points)
+			push!(hulls, [n-1, n])
 		end
-	  cursor += abs(value)
+		cursor += abs(value)
 	end
-	V = convert(Lar.Points, [p[1] for p in points]')
-	EV = convert(Lar.Cells,hulls)
-	return V,EV
+	V = convert(Lar.Points, points')
+	return V, hulls
 end
 const q = grid
 
